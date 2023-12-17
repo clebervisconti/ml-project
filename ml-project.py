@@ -1,21 +1,27 @@
 import pandas as pd
+import numpy as np
+import ssl
+import sklearn
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 print("Hello World")
-df = pd.read_csv('https://raw.githubusercontent.com/clebervisconti/datasets/main/delaney_solubility_with_descriptors.csv')
-df
+
+url = 'https://raw.githubusercontent.com/clebervisconti/datasets/main/delaney_solubility_with_descriptors.csv'
+
+url_data = pd.read_table(url,sep='\t')
+
+url_data.head(3)
+
+df = pd.read_csv(url)
 
 y = df['logS']
 
-
 X = df.drop('logS', axis=1)
-X
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
 
-X_train
-
-X_test
 from sklearn.linear_model import LinearRegression
 lr = LinearRegression()
 lr.fit(X_train, y_train)
@@ -24,7 +30,6 @@ y_lr_train_pred = lr.predict(X_train)
 y_lr_test_pred = lr.predict(X_test)
 
 print(y_lr_train_pred, y_lr_test_pred)
-y_lr_train_pred
 
 from sklearn.metrics import mean_squared_error, r2_score
 lr_train_mse = mean_squared_error(y_train, y_lr_train_pred)
