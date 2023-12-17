@@ -1,9 +1,6 @@
 import pandas as pd
 import numpy as np
-import ssl
 import sklearn
-
-ssl._create_default_https_context = ssl._create_unverified_context
 
 print("Hello World")
 
